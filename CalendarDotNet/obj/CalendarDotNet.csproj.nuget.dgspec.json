@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ASP.NET\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj": {}
+    "C:\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj": {}
   },
   "projects": {
-    "C:\\ASP.NET\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj": {
+    "C:\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ASP.NET\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj",
+        "projectUniqueName": "C:\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj",
         "projectName": "CalendarDotNet",
-        "projectPath": "C:\\ASP.NET\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj",
+        "projectPath": "C:\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\ASP.NET\\CalendarDotNet\\CalendarDotNet\\obj\\",
+        "outputPath": "C:\\CalendarDotNet\\CalendarDotNet\\CalendarDotNet\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -62,9 +62,17 @@
               "target": "Package",
               "version": "[8.0.10, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.6, )"
             }
           },
           "imports": [
