@@ -9,6 +9,6 @@ namespace CalendarDotNet.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public virtual ICollection<Event> Events { get; set; }
+        public virtual required ICollection<Event> Events { get; set; }
     }
 }
