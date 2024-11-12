@@ -6,9 +6,12 @@ namespace CalendarDotNet.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
-        
-        //relational data
+
+        // relational data
         public virtual ICollection<Event> Events { get; set; }
     }
+
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using CalendarDotNet.Data;
-using CalendarDotNet.Models;
 using CalendarDotNet.Models.ViewModels;
-using Microsoft.AspNetCore.Http;
 
 namespace CalendarDotNet.Controllers
 {
@@ -51,7 +45,7 @@ namespace CalendarDotNet.Controllers
         // GET: Event/Create
         public IActionResult Create()
         {
-            return View(new EventViewModel(_dal.GetLocations());
+            return View(new EventViewModel(_dal.GetLocations()));
         }
 
         // POST: Event/Create
@@ -59,7 +53,7 @@ namespace CalendarDotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EventViewModel vm, IFormCollection form)
+        public IActionResult Create(EventViewModel vm, IFormCollection form)
         {
             try
             {
@@ -76,14 +70,14 @@ namespace CalendarDotNet.Controllers
         }
 
         // GET: Event/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events.FindAsync(id);
+            var @event = _dal.GetEvent((int)id);
             if (@event == null)
             {
                 return NotFound();
@@ -96,46 +90,34 @@ namespace CalendarDotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartTime,EndTime")] Event @event)
+        public IActionResult Edit(int id, EventViewModel vm, IFormCollection form)
         {
-            if (id != @event.Id)
+            if (id != vm.Event.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventExists(@event.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _dal.updateEvent(form);
+                TempData["Alert"] = "Success! You modify an event for: " + vm.Event.Name;
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            catch (Exception ex)
+            {
+                ViewData["Alert"] = "An error occured: " + ex.Message;
+                return View(vm);
+            }
         }
 
         // GET: Event/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @event = _dal.GetEvent((int)id);
             if (@event == null)
             {
                 return NotFound();
@@ -147,21 +129,11 @@ namespace CalendarDotNet.Controllers
         // POST: Event/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
-            if (@event != null)
-            {
-                _context.Events.Remove(@event);
-            }
-
-            await _context.SaveChangesAsync();
+            _dal.DeleteEvent((int)id);
+            TempData["Alert"] = "You delete an event.";
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

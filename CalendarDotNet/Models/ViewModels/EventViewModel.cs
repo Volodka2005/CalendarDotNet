@@ -6,7 +6,7 @@ namespace CalendarDotNet.Models.ViewModels
     {
         public Event Event { get; set; }
 
-        public List<SelectListItem> Location { get; set; }  
+        public List<SelectListItem> Location = new List<SelectListItem>();
         public string LocationName { get; set; }
 
         public EventViewModel(Event myevent, List<Location> locations) 
@@ -25,6 +25,10 @@ namespace CalendarDotNet.Models.ViewModels
             {
                 Location.Add(new SelectListItem() { Text = loc.Name });
             }
+        }
+        public EventViewModel()
+        {
+
         }
     } 
 }
