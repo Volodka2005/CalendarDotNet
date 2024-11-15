@@ -3,16 +3,24 @@
 using Microsoft.AspNetCore.Mvc;
 using CalendarDotNet.Data;
 using CalendarDotNet.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using CalendarDotNet.Models;
+using System.Security.Claims;
+using CalendarDotNet.Controllers.ActionFilters;
 
 namespace CalendarDotNet.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
         private readonly IDAL _dal;
-
-        public EventController(IDAL dal)
+        private readonly UserManager<ApplicationUser> _usermanager;
+ 
+        public EventController(IDAL dal, UserManager<ApplicationUser> usermanager)
         {
             _dal = dal;
+            _usermanager = usermanager;
         }
 
         // GET: Event
@@ -22,7 +30,7 @@ namespace CalendarDotNet.Controllers
             {
                 ViewData["Alert"] = TempData["Alert"];
             }
-            return View(_dal.GetEvents());
+            return View(_dal.GetMyEvents(User.FindFirstValue(ClaimTypes.NameIdentifier)));
         }
 
         // GET: Event/Details/5
@@ -70,6 +78,7 @@ namespace CalendarDotNet.Controllers
         }
 
         // GET: Event/Edit/5
+        [UserAccessOnly]
         public IActionResult Edit(int? id)
         {
             if (id == null)

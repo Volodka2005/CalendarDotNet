@@ -16,6 +16,14 @@
                 center: 'title',
                 right: 'timeGridWeek, dayGridMonth, listMonth'
             },
+            eventDidMount: function(info) {
+                var tooltip = new Tooltip(info.el, {
+                    title: info.event.extendedProps.description,
+                    placement: 'top',
+                    trigger: hover,
+                    container: 'body'
+                });
+            }
         });
         calendar.render();
     });
