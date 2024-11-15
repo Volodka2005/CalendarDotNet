@@ -58,7 +58,7 @@ namespace CalendarDotNet.Controllers
             try
             {
                 _dal.CreateEvent(form);
-                TempData["Alert"] = "Success! You created a new event for: " + form["Name"];
+                TempData["Alert"] = "Success! You created a new event for: " + form["Event.Name"];
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -82,7 +82,8 @@ namespace CalendarDotNet.Controllers
             {
                 return NotFound();
             }
-            return View(@event);
+            var vm = new EventViewModel(@event, _dal.GetLocations();
+            return View(vm);
         }
 
         // POST: Event/Edit/5
@@ -90,21 +91,18 @@ namespace CalendarDotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, EventViewModel vm, IFormCollection form)
+        public IActionResult Edit(int id, IFormCollection form)
         {
-            if (id != vm.Event.Id)
-            {
-                return NotFound();
-            }
             try
             {
                 _dal.updateEvent(form);
-                TempData["Alert"] = "Success! You modify an event for: " + vm.Event.Name;
+                TempData["Alert"] = "Success! You modify an event for: " + form["Event.Name"];
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewData["Alert"] = "An error occured: " + ex.Message;
+                var vm = new EventViewModel(_dal.GetEvent(id), _dal.GetLocations()); 
                 return View(vm);
             }
         }

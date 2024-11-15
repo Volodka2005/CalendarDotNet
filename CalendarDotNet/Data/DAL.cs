@@ -48,10 +48,10 @@ namespace CalendarDotNet.Data
             db.SaveChanges();
         }
 
-        public void updateEvent(IFormCollection form)
+        public void updateEvent(IFormCollection form) 
         {
             var locname = form["Location"].ToString();
-            var eventid = int.Parse(form["Id"]);
+            var eventid = int.Parse(form["Event.Id"]);
             var myevent = db.Events.FirstOrDefault(x => x.Id == eventid);
             var location = db.Locations.FirstOrDefault(x => x.Name == locname);
             myevent.UpdateEvent(form, location);
