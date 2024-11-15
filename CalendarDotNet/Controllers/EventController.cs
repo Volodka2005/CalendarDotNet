@@ -53,7 +53,7 @@ namespace CalendarDotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(EventViewModel vm, IFormCollection form)
+        public async Task <IActionResult> Create(EventViewModel vm, IFormCollection form)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace CalendarDotNet.Controllers
             {
                 return NotFound();
             }
-            var vm = new EventViewModel(@event, _dal.GetLocations();
+            var vm = new EventViewModel(@event, _dal.GetLocations());
             return View(vm);
         }
 
@@ -91,7 +91,7 @@ namespace CalendarDotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection form)
+        public async Task<IActionResult> Edit(int id, IFormCollection form)
         {
             try
             {
@@ -129,7 +129,7 @@ namespace CalendarDotNet.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            _dal.DeleteEvent((int)id);
+            _dal.DeleteEvent(id);
             TempData["Alert"] = "You delete an event.";
             return RedirectToAction(nameof(Index));
         }

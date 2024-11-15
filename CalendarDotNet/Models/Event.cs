@@ -19,7 +19,7 @@ namespace CalendarDotNet.Models
         public virtual Location Location { get; set; }
         public virtual ApplicationUser User { get; set; }
 
-        public Event (IFormCollection form, Location location)
+        public Event(IFormCollection form, Location location)
         {
             Name = form["Event.Name"].ToString();
             Description = form["Event.Description"].ToString();

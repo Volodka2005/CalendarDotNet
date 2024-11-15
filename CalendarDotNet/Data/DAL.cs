@@ -42,7 +42,7 @@ namespace CalendarDotNet.Data
 
         public void CreateEvent(IFormCollection form)
         {
-            var locname = form["Location"].ToString ();
+            var locname = form["Location"].ToString();
             var newevent = new Event(form, db.Locations.FirstOrDefault(x => x.Name == locname));
             db.Events.Add(newevent);
             db.SaveChanges();
@@ -54,7 +54,7 @@ namespace CalendarDotNet.Data
             var eventid = int.Parse(form["Event.Id"]);
             var myevent = db.Events.FirstOrDefault(x => x.Id == eventid);
             var location = db.Locations.FirstOrDefault(x => x.Name == locname);
-            myevent.UpdateEvent(form, location);
+            myevent.UpdateEvent(form, location); 
             db.Entry(myevent).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             db.SaveChanges();
         }

@@ -57,7 +57,7 @@ namespace CalendarDotNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name")] Location location)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Location location)
         {
             if (ModelState.IsValid)
             {
